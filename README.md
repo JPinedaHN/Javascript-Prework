@@ -53,25 +53,26 @@ Necesitamos verificar la versión de Windows: `WIN + R` y luego ingresamos el co
 
 Abrir Windows Powershell como Administrador y continuamos con los pasos de la guia:
 
-    1. Copiamos el siguiente código en la consola:
+1. Copiamos el siguiente código en la consola:
 
-    ```bash
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-    ```
+```bash
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+```
 
-    2. Actualizamos a la versión correcta
-    3. Activamos la funcionalidad de máquina virtual
+2. Actualizamos a la versión correcta
+3. Activamos la funcionalidad de máquina virtual
 
-    ```bash
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-    ```
+```bash
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
 
-    4. Activamos WSL 2
-    ```bash
-    wsl --set-default-version 2
-    ```
+4. Activamos WSL 2
 
-    5. Instalamos la versión de Linux en la Microsoft store, recomendado Ubuntu
+```bash
+wsl --set-default-version 2
+```
+
+5. Instalamos la versión de Linux en la Microsoft store, recomendado Ubuntu
 
 ### Configuración de ubuntu en WSL
 
@@ -105,3 +106,46 @@ para verificar la instalación
 ```bash
 node -v
 ```
+
+### Instalar GIT
+
+Actualizamos los repositorios
+
+```bash
+sudo apt-get update
+
+sudo apt-get upgrade
+```
+
+Instalamos GIT
+
+```
+sudo apt install git
+```
+
+#### Creacición de Llave SSH
+
+Generamos la llave:
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "your@email.com"
+```
+
+Luego hacemos el siguiente comando para ver si existe un agente revisando las claves:
+
+```bash
+eval "$(ssh-agent -s)"
+
+ssh-copy-id "your@email.com"
+```
+
+Debemos ahora copiar la clave pública con el siguiente comando:
+
+```bash
+cd ~/.ssh
+
+cat id_rsa.pub
+```
+
+Copiamos la impresión de la consola y vamos a Github y añadimos la clave en el apartado de SSH Keys. Una vez agregado ya no solicitará User y password al momento de conectarnos al repositorio
+
